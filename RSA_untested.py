@@ -3,21 +3,21 @@ from Crypto.PublicKey import RSA
 
 class RSA_433(CipherInterface):
 	def __init__(self):
-		self.keyfile = ""
+		self.keystring = ""
 
 	def setKey(self, keyfilestring):
-		self.keyfile = keyfilestring
-		RSA.generate(2048)
-		f = open(keyfilestring, 'w')
-		f.write(RSA.exportKey('PEM'))
+		f = open(keyfilestring, 'r')
+		Key = f.read()
 		f.close()
+		if (!Key):
+			return False
+		self.keystring = Key
 		return True
 
 	def encrypt(self, plaintext):
 		ciphertext = ""
-		keyfilestring = self.keyfile
-		f = open(keyfilestring,  'r')
-		RSA.importKey(f.read()))
+		key = self.keystring
+		RSA.importKey(key)
 		f.close()
 		k = 535 #The encrypt function requires a random byte string or long parameter that will be ignored
 		ciphertext = RSA.encrypt(plaintext, k)
@@ -25,9 +25,8 @@ class RSA_433(CipherInterface):
 
 	def decrypt(self, ciphertext):
 		plaintext = ""
-		keyfilestring = self.keyfile
-		f = open(keyfilestring,  'r')
-		RSA.importKey(f.read()))
+		key = self.keystring
+		RSA.importKey(key)
 		f.close()
 		plaintext = RSA.decrypt(ciphertext)
 		return plaintext
