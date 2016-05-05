@@ -18,7 +18,7 @@ def handleInput(cipherName, inputKey, encDec, inputFile, outputFile):	###functio
 		else:
 			print("Invalid Key!")
 
-	elif(cipherName == "RSA"):
+	if(cipherName == "RSA"):
 		myCipher = RSA.RSA()
 		if myCipher.setKey(inputKey):
 			if(encDec == "ENC"):
@@ -41,7 +41,7 @@ def main():
 
 
 	# test for DES class
-	des = DES_class.DES_class()
+	'''des = DES_class.DES_class()
 	des.setKey('13371337')
 	plainText = "BillyBob"
 	print("Plain text: " + plainText)
@@ -53,7 +53,15 @@ def main():
 
 	test =  des.decrypt(cipherText)
 	# Decrypt the text
-	print("Decrypted text: " + str(test))
+	print("Decrypted text: " + str(test))'''
+
+	print(str(sys.argv[0]))
+	print(str(sys.argv[1]))
+	print(sys.argv[2])
+	print(sys.argv[3])
+	print(sys.argv[4])
+	print("Hello")
+	handleInput(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
 
 
 if __name__ == "__main__":
