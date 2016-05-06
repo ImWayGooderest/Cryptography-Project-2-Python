@@ -1,6 +1,6 @@
 from CipherInterface import CipherInterface
-from Crypto.PublicKey import RSA
-import sys
+import Crypto.PublicKey.RSA
+from Crypto.Random import get_random_bytes
 
 class RSA(CipherInterface):
 	def __init__(self):
@@ -9,10 +9,13 @@ class RSA(CipherInterface):
 	def setKey(self, keyfilestring):
 		f = open(keyfilestring, 'r')
 		Key = f.read()
-		f.close()
-		if not Key:
-			return False
-		self.keystring = Key
+		#if not Key:
+			#return False
+
+		print(Key)
+		self.keystring = Crypto.PublicKey.RSA.importKey(Key)
+
+
 		return True
 
 	def encrypt(self, plaintext):
@@ -21,15 +24,18 @@ class RSA(CipherInterface):
 		###RSA.importKey(key)
 		###f.close()
 		###sys.setrecursionlimit(1500)
+
+
 		k = 535 #The encrypt function requires a random byte string or long parameter that will be ignored
-		ciphertext = RSA.encrypt(plaintext, k)
+		ciphertext = self.keystring.encrypt(plaintext.encode('utf-8'), 32)
 		return ciphertext
+
 
 	def decrypt(self, ciphertext):
 		plaintext = ""
-		key = self.keystring
-		RSA.importKey(key)
+		#key = self.keystring
+		#RSA.importKey(key)
 
 		###f.close()
-		plaintext = RSA.decrypt(ciphertext)
+		plaintext = self.keystring.decrypt(ciphertext)
 		return plaintext
