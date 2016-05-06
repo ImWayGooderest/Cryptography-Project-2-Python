@@ -24,7 +24,6 @@ class DES_class(CipherInterface):
 			for x in range(8 - (length % 8)):
 				plaintext += "x"
 		ciphertext = self.des.encrypt(plaintext)
-		print(ciphertext)
 		return ciphertext
 
 	def decrypt(self, ciphertext):
