@@ -19,11 +19,17 @@ class DES_class(CipherInterface):
 		ciphertext = ""
 		self.des = DES.new(self.key, DES.MODE_ECB)
 		# code stuff goes here
+		length = len(plaintext)
+		if length % 8 != 0:
+			for x in range(8 - (length % 8)):
+				plaintext += "x"
 		ciphertext = self.des.encrypt(plaintext)
+		print(ciphertext)
 		return ciphertext
 
 	def decrypt(self, ciphertext):
 		plaintext = ""
+		self.des = DES.new(self.key, DES.MODE_ECB)
 		# code stuff goes here
 		plaintext = self.des.decrypt(ciphertext)
 		return plaintext
