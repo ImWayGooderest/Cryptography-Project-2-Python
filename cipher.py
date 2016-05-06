@@ -3,22 +3,25 @@ import sys
 
 def handleInput(cipherName, inputKey, encDec, inputFile, outputFile):	###function to handle user input
 	iFile = open(inputFile).read()
-	oFile = open(outputFile, "w")
+	oFile = open(outputFile)
 
 	# The code below is from the last project. I kept it here as an example because I bet this part will be similar for this project
 	if(cipherName == "DES"):
 		myCipher = DES_class.DES_class()
 		if myCipher.setKey(inputKey):
 			if(encDec == "ENC"):
+				oFile = open(outputFile, "wb")
 				cipherText = myCipher.encrypt(iFile)
 				oFile.write(cipherText)
 			else:
+				iFile = open(inputFile, "rb").read()
+				oFile = open(outputFile, "wb")
 				plainText = myCipher.decrypt(iFile)
 				oFile.write(plainText)
 		else:
 			print("Invalid Key!")
 
-	if(cipherName == "RSA"):
+	elif(cipherName == "RSA"):
 		myCipher = RSA.RSA()
 		if myCipher.setKey(inputKey):
 			if(encDec == "ENC"):
