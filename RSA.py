@@ -9,8 +9,8 @@ class RSA(CipherInterface):
 	def setKey(self, keyfilestring):
 		f = open(keyfilestring, 'r')
 		Key = f.read()
-		#if not Key:
-			#return False
+		if not Key:
+			return False
 
 		print(Key)
 		self.keystring = Crypto.PublicKey.RSA.importKey(Key)
