@@ -23,7 +23,7 @@ class DES_class(CipherInterface):
 		if length % 8 != 0:
 			for x in range(8 - (length % 8)):
 				plaintext += "x"
-		ciphertext = self.des.encrypt(plaintext)
+		ciphertext = self.des.encrypt(bytes(plaintext, encoding="ascii"))
 		return ciphertext
 
 	def decrypt(self, ciphertext):
