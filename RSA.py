@@ -20,29 +20,21 @@ class RSA(CipherInterface):
 		return True
 
 	def encrypt(self, plaintext):
-		###ciphertext = ""
-		###key = self.keystring
-		###RSA.importKey(key)
-		###f.close()
-		###sys.setrecursionlimit(1500)
-
-
-		# k = 535 #The encrypt function requires a random byte string or long parameter that will be ignored
-		# ciphertext = self.keystring.encrypt(bytes(plaintext, encoding="ascii"), 32)
-
+		CHUNK_SIZE = 214 #amount to encrypt at a time
+		ciphertext= b""
 		cipher = PKCS1_OAEP.new(self.keystring)
-		ciphertext = cipher.encrypt(bytes(plaintext, encoding="ascii"))
+		plaintext = bytes(plaintext, encoding="ascii") #converts to byte string
+		for x in range(0, len(plaintext), CHUNK_SIZE):
+			ciphertext += cipher.encrypt(plaintext[x:x+CHUNK_SIZE])
 
 		return ciphertext
 
 
 	def decrypt(self, ciphertext):
-		plaintext = ""
-		#key = self.keystring
-		#RSA.importKey(key)
-
-		###f.close()
-		# plaintext = self.keystring.decrypt(ciphertext)
+		CHUNK_SIZE = 256 #amount to decrypt at a time
+		plaintext= b""
 		cipher = PKCS1_OAEP.new(self.keystring)
-		plaintext = cipher.decrypt(ciphertext)
+		# plaintext += cipher.decrypt(ciphertext)
+		for x in range(0, len(ciphertext), CHUNK_SIZE):
+			plaintext += cipher.decrypt(ciphertext[x:x+CHUNK_SIZE])
 		return plaintext
