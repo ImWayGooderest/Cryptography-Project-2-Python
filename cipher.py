@@ -2,14 +2,12 @@ import RSA, DES_class
 import sys
 
 def handleInput(cipherName, inputKey, encDec, inputFile, outputFile):	###function to handle user input
-	iFile = open(inputFile).read()
-	oFile = open(outputFile, "w")
 
-	# The code below is from the last project. I kept it here as an example because I bet this part will be similar for this project
 	if(cipherName == "DES"):
 		myCipher = DES_class.DES_class()
 		if myCipher.setKey(inputKey):
 			if(encDec == "ENC"):
+				iFile = open(inputFile).read()
 				oFile = open(outputFile, "wb")
 				cipherText = myCipher.encrypt(iFile)
 				oFile.write(cipherText)
@@ -25,16 +23,20 @@ def handleInput(cipherName, inputKey, encDec, inputFile, outputFile):	###functio
 		myCipher = RSA.RSA()
 		if myCipher.setKey(inputKey):
 			if(encDec == "ENC"):
+				iFile = open(inputFile).read()
+				oFile = open(outputFile, "wb")
 				cipherText = myCipher.encrypt(iFile)
-				oFile.write(''.join('%s' % x for x in cipherText))
+				oFile.write(cipherText)
 			else:
+				iFile = open(inputFile, "rb").read()
+				oFile = open(outputFile, "wb")
 				plainText = myCipher.decrypt(iFile)
 				oFile.write(plainText)
 		else:
 			print("Invalid Key!")
 
 	else:
-		print("Invalid Cipher Name! Use:\nPLF: PLayfair\n RTS: Row Transposition\nRFC: Railfence\nVIG: Vigenre\nCES: Caesar\nMAC: Monoalphabetic Cipher")
+		print("Invalid Cipher Name! Use:\nDES: DES\n RSA: RSA")
 
 def main():
 	# if(len(sys.argv) == 6):

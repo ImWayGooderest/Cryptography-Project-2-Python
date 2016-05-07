@@ -27,8 +27,8 @@ class RSA(CipherInterface):
 
 
 		k = 535 #The encrypt function requires a random byte string or long parameter that will be ignored
-		ciphertext = self.keystring.encrypt(plaintext.encode('utf-8'), 32)
-		return ciphertext
+		ciphertext = self.keystring.encrypt(bytes(plaintext, encoding="ascii"), 32)
+		return ciphertext[0]
 
 
 	def decrypt(self, ciphertext):
