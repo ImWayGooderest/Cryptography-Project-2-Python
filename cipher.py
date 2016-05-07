@@ -3,7 +3,7 @@ import sys
 
 def handleInput(cipherName, inputKey, encDec, inputFile, outputFile):	###function to handle user input
 	iFile = open(inputFile).read()
-	oFile = open(outputFile)
+	oFile = open(outputFile, "w")
 
 	# The code below is from the last project. I kept it here as an example because I bet this part will be similar for this project
 	if(cipherName == "DES"):
@@ -26,7 +26,7 @@ def handleInput(cipherName, inputKey, encDec, inputFile, outputFile):	###functio
 		if myCipher.setKey(inputKey):
 			if(encDec == "ENC"):
 				cipherText = myCipher.encrypt(iFile)
-				oFile.write(cipherText)
+				oFile.write(''.join('%s' % x for x in cipherText))
 			else:
 				plainText = myCipher.decrypt(iFile)
 				oFile.write(plainText)
