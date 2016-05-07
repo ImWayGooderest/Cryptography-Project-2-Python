@@ -1,4 +1,5 @@
 from CipherInterface import CipherInterface
+from Crypto.Cipher import PKCS1_OAEP
 import Crypto.PublicKey.RSA
 from Crypto.Random import get_random_bytes
 
@@ -26,9 +27,13 @@ class RSA(CipherInterface):
 		###sys.setrecursionlimit(1500)
 
 
-		k = 535 #The encrypt function requires a random byte string or long parameter that will be ignored
-		ciphertext = self.keystring.encrypt(bytes(plaintext, encoding="ascii"), 32)
-		return ciphertext[0]
+		# k = 535 #The encrypt function requires a random byte string or long parameter that will be ignored
+		# ciphertext = self.keystring.encrypt(bytes(plaintext, encoding="ascii"), 32)
+
+		cipher = PKCS1_OAEP.new(self.keystring)
+		ciphertext = cipher.encrypt(bytes(plaintext, encoding="ascii"))
+
+		return ciphertext
 
 
 	def decrypt(self, ciphertext):
@@ -37,5 +42,7 @@ class RSA(CipherInterface):
 		#RSA.importKey(key)
 
 		###f.close()
-		plaintext = self.keystring.decrypt(ciphertext)
+		# plaintext = self.keystring.decrypt(ciphertext)
+		cipher = PKCS1_OAEP.new(self.keystring)
+		plaintext = cipher.decrypt(ciphertext)
 		return plaintext
